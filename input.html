@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+</style>
+</head>
+<body>
+<h1>Enter details</h1>
+
+<table id = "t" style="width:100%">
+  <caption> Bill generator</caption>
+  <tr>
+    <th>Name</th>
+    <th>Price per unit</th>
+    <th>Quantity</th>
+  </tr>
+<!--   <tr>
+    <td>January</td>
+    <td>$100</td>
+  </tr>
+  <tr>
+    <td>February</td>
+    <td>$50</td>
+  </tr> -->
+</table>
+<button onclick="myCreateFunction()">Add row</button>
+<button onclick="makejson()">Submit</button>
+
+
+<script>
+
+function myCreateFunction() 
+    {
+        var table = document.getElementById("t");
+        var rowCount = table.rows.length;
+        var row = table.insertRow(rowCount);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        //cell1.innerHTML=rowCount;
+        var element1 = document.createElement("input");
+        var element2 = document.createElement("input");
+        var element3 = document.createElement("input");
+        element1.type = "text";
+        element1.id="name"+(rowCount);
+        element2.type = "text";
+        element2.id="price"+(rowCount);
+        element3.type = "text";
+        element3.id="qty"+(rowCount);
+        cell1.appendChild(element1);
+        cell2.appendChild(element2);
+        cell3.appendChild(element3);
+      }
+
+function makejson()
+{
+  var table = document.getElementById("t");
+  var rowCount = table.rows.length;
+  var s = '\n\n{\n"name":"Tata"';
+  // var s = "{'name':'Tata'" ;
+  for(var i = 1;i<rowCount;i++)  
+  {
+    var n = document.getElementById("name"+(i)).value;
+    var p = document.getElementById("price"+(i)).value;
+    var q = document.getElementById("qty"+(i)).value;
+
+    s = s+',"data'+i+'":["'+n+'",'+p+','+q+']';
+    // s = s+",'data"+i+"':["+n+","+p+","+q+"]";
+  }
+  s=s+"\n}";
+
+   text = s;
+   // text += '\n';
+   // text += JSON.stringify(saledata);
+   var el = document.createElement('a');
+   el.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+   el.setAttribute('download', 'json.json');
+   el.click();
+   console.log(s);
+} 
+
+
+
+</script>
+
+</body>
+</html>
